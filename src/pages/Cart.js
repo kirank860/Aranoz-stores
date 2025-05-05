@@ -1,38 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCart, removeFromCart, updateQuantity } from '../features/cart/cartSlice';
 
 const Cart = () => {
-  // Sample cart items - in a real app, this would come from a cart context/state
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: 'Product 1',
-      price: 99.99,
-      quantity: 1,
-      image: 'https://via.placeholder.com/100',
-    },
-    {
-      id: 2,
-      name: 'Product 2',
-      price: 149.99,
-      quantity: 2,
-      image: 'https://via.placeholder.com/100',
-    },
-  ]);
+  const cart = useSelector(selectCart);
+  const dispatch = useDispatch();
 
-  const updateQuantity = (id, newQuantity) => {
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
-
-  const subtotal = cartItems.reduce(
+  const subtotal = cart.reduce(
     (total, item) => total + item.price * item.quantity,
     0
   );
@@ -43,7 +18,7 @@ const Cart = () => {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">Shopping Cart</h1>
 
-      {cartItems.length === 0 ? (
+      {cart.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-xl text-gray-600 mb-4">Your cart is empty</p>
           <Link
@@ -57,7 +32,7 @@ const Cart = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2">
-            {cartItems.map((item) => (
+            {cart.map((item) => (
               <div
                 key={item.id}
                 className="bg-white rounded-lg shadow-md p-4 mb-4 flex items-center"
@@ -74,23 +49,21 @@ const Cart = () => {
                   <p className="text-gray-600">${item.price}</p>
                   <div className="flex items-center mt-2">
                     <button
-                      onClick={() =>
-                        updateQuantity(item.id, Math.max(1, item.quantity - 1))
-                      }
-                      className="px-2 py-1 border rounded"
+                      onClick={() => dispatch(updateQuantity({ productId: item.id, quantity: Math.max(1, item.quantity - 1) }))}
+                      className="px-2 py-1 border rounded hover:bg-gray-100 transition"
                     >
                       -
                     </button>
                     <span className="mx-2">{item.quantity}</span>
                     <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="px-2 py-1 border rounded"
+                      onClick={() => dispatch(updateQuantity({ productId: item.id, quantity: item.quantity + 1 }))}
+                      className="px-2 py-1 border rounded hover:bg-gray-100 transition"
                     >
                       +
                     </button>
                     <button
-                      onClick={() => removeItem(item.id)}
-                      className="ml-4 text-red-600 hover:text-red-800"
+                      onClick={() => dispatch(removeFromCart(item.id))}
+                      className="ml-4 text-red-600 hover:text-red-800 transition"
                     >
                       Remove
                     </button>

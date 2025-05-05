@@ -5,7 +5,7 @@ const products = [
     price: 129.99,
     category: 'Electronics',
     description: 'Experience high-fidelity sound with these wireless headphones. Perfect for music lovers and professionals alike.',
-    image: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=600&q=80',
+    image: 'https://img.freepik.com/free-photo/headphones-laptop-home_23-2149551432.jpg?ga=GA1.1.865945939.1714076315&semt=ais_hybrid&w=740',
     stock: 10,
   },
   {
@@ -14,7 +14,7 @@ const products = [
     price: 199.99,
     category: 'Electronics',
     description: 'Stay connected and track your fitness with this stylish smart watch. Features heart rate monitoring and notifications.',
-    image: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&w=600&q=80',
+    image: 'https://img.freepik.com/premium-vector/green-fitness-watch-white-background_8276-12.jpg?ga=GA1.1.865945939.1714076315&semt=ais_hybrid&w=740',
     stock: 7,
   },
   {
